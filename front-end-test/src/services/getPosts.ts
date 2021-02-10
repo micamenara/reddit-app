@@ -1,7 +1,7 @@
 import { PostsFetchingData } from "./types/Posts";
 
 export default async function getPosts() {
-  return fetch("https://www.reddit.com/r/javascript/top.json")
+  return fetch("https://www.reddit.com/top.json")
     .then((res) => {
       return res.json();
     })

@@ -1,4 +1,4 @@
-export type Post = {
+export type PostType = {
   data: {
     approved_at_utc?: string;
     author: string;
@@ -15,8 +15,12 @@ export type Post = {
     subreddit_type: string;
     suggested_sort: string;
     thumbnail: string;
+    thumbnail_width: number;
+    thumbnail_height: number;
+    num_comments: number;
     title: string;
     url: string;
+    permalink: string;
   };
   kind: string;
 };
@@ -25,7 +29,7 @@ export type PostsFetchingData = {
   data: {
     after?: string;
     before?: string;
-    children: Post[];
+    children: PostType[];
     dist: number;
   };
 };
