@@ -3,6 +3,7 @@ const colors = {
   primaryLight: "#bca3e8",
   dark: "#1d1b25",
   lighterDark: "#2e2c3c",
+  gray1: "#a19fb3",
 };
 
 export default colors;

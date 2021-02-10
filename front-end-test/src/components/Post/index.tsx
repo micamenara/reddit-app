@@ -2,28 +2,33 @@ import { AppState } from "store/types";
 import { connect } from "react-redux";
 import { PostType } from "services/types/Posts";
 import styled from "styled-components";
+import Author from "components/Author";
+import Comments from "components/Comments";
 
 declare type PostsProps = {
   post?: PostType;
 };
 const mapStateToProps = (state: AppState) => {
   return {
-    post: state.post,
+    post: state?.app?.selectedPost,
   };
 };
 export default connect(mapStateToProps)(function Post({ post }: PostsProps) {
   console.log(post);
-  return (
+  return post && post.data ? (
     <PostContent>
-      {post && post.data ? (
-        <div>
-          <h1>{post.data.title}</h1>
-        </div>
-      ) : null}
+      <Author
+        author={post.data.author}
+        thumbnail={post.data.thumbnail}
+        size="big"
+      />
+      <h2>{post.data.title}</h2>
+      <Comments amount={post.data.num_comments} />
     </PostContent>
-  );
+  ) : null;
 });
 
 const PostContent = styled.div`
   flex-grow: 1;
+  padding: ${({ theme }) => theme.sizes.md};
 `;

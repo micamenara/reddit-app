@@ -1,18 +1,34 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
+import { updateSelectedPost } from "store/actions";
 import {
   faChartLine,
-  faCommentAlt,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import { PostType } from "services/types/Posts";
 import styled from "styled-components";
 import Button from "components/Button";
+import Author from "components/Author";
+import Comments from "components/Comments";
 
 declare type PostsNavProps = {
   posts?: PostType[];
+  handleUpdateSelecetdPost: (post: PostType) => void;
 };
 
-export default function PostsNav({ posts }: PostsNavProps) {
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  return {
+    handleUpdateSelecetdPost: (post: PostType) => {
+      dispatch(updateSelectedPost(post));
+    },
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(function PostsNav({ posts, handleUpdateSelecetdPost }: PostsNavProps) {
   return (
     <PostNavContainer>
       <Trending>
@@ -21,21 +37,20 @@ export default function PostsNav({ posts }: PostsNavProps) {
       <NavContent>
         {posts && posts.length ? (
           posts.map((post, index) => (
-            <PostBox key={index}>
+            <PostBox
+              key={index}
+              onClick={() => {
+                handleUpdateSelecetdPost(post);
+              }}
+            >
               <PostBoxData>
-                <Author>
-                  <img src={post.data.thumbnail} alt={post.data.author} />
-                  <span>{post.data.author}</span>
-                </Author>
+                <Author author={post.data.author} thumbnail={post.data.thumbnail} />
                 <StyledButton>
                   <FontAwesomeIcon icon={faTimes} size="sm" />
                 </StyledButton>
               </PostBoxData>
               <h4>{post.data.title}</h4>
-              <Comments>
-                <FontAwesomeIcon icon={faCommentAlt} size="sm" />{" "}
-                {post.data.num_comments}
-              </Comments>
+              <Comments amount={post.data.num_comments} />
             </PostBox>
           ))
         ) : (
@@ -45,13 +60,14 @@ export default function PostsNav({ posts }: PostsNavProps) {
       <FullButton variant="primary">Dismiss all</FullButton>
     </PostNavContainer>
   );
-}
+});
 
 const PostBox = styled.div`
   padding: ${({ theme }) => theme.sizes.sm};
   margin-bottom: 8px;
   background-color: ${({ theme }) => theme.colors.lighterDark};
   border-radius: 4px;
+  cursor: pointer;
   > h4 {
     margin: ${({ theme }) => theme.sizes.md} 0px;
   }
@@ -59,6 +75,7 @@ const PostBox = styled.div`
 
 const PostNavContainer = styled.div`
   width: 300px;
+  min-width: 300px;
   position: relative;
   max-height: ${({ theme }) => `calc(100vh - ${theme.sizes.homeTitle})`};
 `;
@@ -95,28 +112,6 @@ const PostBoxData = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-`;
-
-const Comments = styled.span`
-  color: ${({ theme }) => theme.colors.primaryLight};
-  font-size: 14px;
-`;
-
-const Author = styled.div`
-  display: flex;
-
-  align-items: center;
-  > span {
-    color: #a19fb3;
-    font-size: ${({ theme }) => theme.sizes.sm};
-  }
-  > img {
-    margin-right: ${({ theme }) => theme.sizes.sm};
-    width: ${({ theme }) => theme.sizes.lg};
-    height: ${({ theme }) => theme.sizes.lg};
-    object-fit: cover;
-    border-radius: 50%;
-  }
 `;
 
 const FullButton = styled(Button)`

@@ -4,19 +4,23 @@ import getPosts from "services/getPosts";
 import { PostType } from "services/types/Posts";
 import PostsNav from "components/PostsNav";
 import { connect } from "react-redux";
-import { updatePost } from "store/actions";
+import { updatePosts, updateSelectedPost } from "store/actions";
 import { Dispatch } from "redux";
 import Post from "components/Post";
-import Logo from "components/Logo";
+import Navbar from "components/Navbar";
 
 declare type HomeProps = {
-  onChange: (post: PostType) => void;
+  handleUpdatePosts: (post: PostType[]) => void;
+  handleUpdateSelecetdPost: (post: PostType) => void;
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
-    onChange: (post: PostType) => {
-      dispatch(updatePost(post));
+    handleUpdatePosts: (posts: PostType[]) => {
+      dispatch(updatePosts(posts));
+    },
+    handleUpdateSelecetdPost: (post: PostType) => {
+      dispatch(updateSelectedPost(post));
     },
   };
 };
@@ -24,24 +28,22 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
 export default connect(
   null,
   mapDispatchToProps
-)(function Home({ onChange }: HomeProps): JSX.Element {
+)(function Home({ handleUpdatePosts, handleUpdateSelecetdPost }: HomeProps): JSX.Element {
   const [posts, setPosts] = useState<PostType[]>([]);
 
   useEffect(() => {
     getPosts().then((res) => {
       if (res) {
-        onChange(res.data.children[0]);
+        handleUpdatePosts(res.data.children);
+        handleUpdateSelecetdPost(res.data.children[0]);
         setPosts(res.data.children);
       }
     });
-  }, [onChange]);
+  }, [handleUpdatePosts, handleUpdateSelecetdPost]);
 
   return (
     <Section>
-      <Title>
-        <Logo width="32px" height="32px" />
-        <h1>Reddit</h1>
-      </Title>
+      <Navbar />
       <HomeContent>
         <PostsNav posts={posts} />
         <Post />
@@ -61,13 +63,4 @@ const Section = styled.div`
 const HomeContent = styled.div`
   display: flex;
   flex-direction: row;
-`;
-
-const Title = styled.div`
-  display: flex;
-  align-items: center;
-  height: ${({ theme }) => theme.sizes.homeTitle};
-  > svg {
-    margin-right: ${({ theme }) => theme.sizes.sm};
-  }
 `;

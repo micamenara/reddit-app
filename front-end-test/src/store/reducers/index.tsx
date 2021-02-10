@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 import postReducer from "./post";
 
 const FrontEndApp = combineReducers({
-  post: postReducer,
+  app: postReducer,
 });
 
 export default FrontEndApp;

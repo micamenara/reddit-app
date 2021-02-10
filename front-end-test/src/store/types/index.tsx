@@ -1,10 +1,18 @@
 import { PostType } from "services/types/Posts";
 
-export type StoreActions = {
-  post: PostType
-  type: "UPDATE_POST";
+export type UpdatePostsActions = {
+  posts: PostType[];
+  type: "UPDATE_POSTS";
+};
+
+export type UpdateSelectedPostActions = {
+  selectedPost: string;
+  type: "UPDATE_SELECTED_POST";
 };
 
 export type AppState = {
-  post: PostType
-}
+  app?: {
+    posts?: PostType[];
+    selectedPost?: PostType;
+  };
+};
