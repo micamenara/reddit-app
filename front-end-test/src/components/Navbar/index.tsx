@@ -1,20 +1,25 @@
-import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Logo from "components/Logo";
-import { useState } from "react";
+import MenuContext from "context/MenuContext";
+import useIsMobile from "hooks/useIsMobile";
+import { useContext } from "react";
 import styled from "styled-components";
 
 export default function Navbar() {
-  const [open, setOpen] = useState(false);
+  const isMobile = useIsMobile();
+  const { setIsOpen, isOpen } = useContext(MenuContext);
   return (
     <Nav>
-      <Menu onClick={() => setOpen(!open)}>
-        {open ? (
-          <FontAwesomeIcon icon={faTimes} size="lg" />
-        ) : (
+      {isMobile && (
+        <StyledMenu
+          onClick={() => {
+            setIsOpen(!isOpen);
+          }}
+        >
           <FontAwesomeIcon icon={faBars} size="lg" />
-        )}
-      </Menu>
+        </StyledMenu>
+      )}
       <Title>
         <Logo width="32px" height="32px" />
         <h1>Reddit</h1>
@@ -29,7 +34,7 @@ const Nav = styled.div`
   height: ${({ theme }) => theme.sizes.homeTitle};
 `;
 
-const Menu = styled.button`
+export const StyledMenu = styled.button`
   background: #ffffff45;
   border: none;
   width: 32px;

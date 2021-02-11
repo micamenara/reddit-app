@@ -13,8 +13,7 @@ const mapStateToProps = (state: AppState) => {
     post: state?.app?.selectedPost,
   };
 };
-export default connect(mapStateToProps)(function Post({ post }: PostsProps) {
-  console.log(post);
+export default connect(mapStateToProps)(function Post({ post }: PostsProps) { 
   return post && post.data ? (
     <PostContent>
       <Author
@@ -31,4 +30,5 @@ export default connect(mapStateToProps)(function Post({ post }: PostsProps) {
 const PostContent = styled.div`
   flex-grow: 1;
   padding: ${({ theme }) => theme.sizes.md};
+  margin-top:${({ theme }) => theme.sizes.homeTitle};
 `;
