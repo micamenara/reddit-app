@@ -1,4 +1,8 @@
-import { faChartLine, faTimes } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChartLine,
+  faSpinner,
+  faTimes,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import MenuContext from "context/MenuContext";
 import useIsMobile from "hooks/useIsMobile";
@@ -78,6 +82,7 @@ export default connect(
       : [];
     handleDeletePost(newPosts);
   };
+
   return (
     <SideNavContainer isMobile={isMobile} ref={ref}>
       <Header>
@@ -101,7 +106,10 @@ export default connect(
               <PostCard
                 post={post}
                 key={index}
-                onClick={() => handleUpdateSelecetdPost(post)}
+                onClick={() => {
+                  handleUpdateSelecetdPost(post);
+                  setIsOpen(false);
+                }}
                 onDelete={() => handleDelete(post)}
               />
             ))}
@@ -112,15 +120,17 @@ export default connect(
             />
           </div>
         ) : (
-          <span>Loading...</span>
+          <FontAwesomeIcon icon={faSpinner} pulse size="lg" />
         )}
       </NavContent>
-      <FullButton variant="primary">Dismiss all</FullButton>
+      <ButtonContainer>
+        <FullButton variant="primary">Dismiss all</FullButton>
+      </ButtonContainer>
     </SideNavContainer>
   );
 });
 
-const SideNavContainer = styled.div<{ isMobile: boolean }>`
+const SideNavContainer = styled.div<{ isMobile: boolean}>`
   width: 300px;
   min-width: 300px;
   position: relative;
@@ -142,13 +152,18 @@ const NavContent = styled.div<{ isMobile: boolean }>`
 `;
 
 const FullButton = styled(Button)`
-  position: absolute;
-  bottom: 0px;
   width: 100%;
+`;
+const ButtonContainer = styled.div`
+  position: absolute;
+  width: 100%;
+  bottom: 0px;
+  padding: 2px;
+  background-color: ${({ theme }) => theme.colors.dark};
 `;
 
 const Header = styled.div`
-  padding: ${({ theme }) => `opx ${theme.sizes.sm}`};
+  padding: ${({ theme }) => `0px ${theme.sizes.sm}`};
   height: ${({ theme }) => theme.sizes.trending};
   width: 100%;
   display: flex;
