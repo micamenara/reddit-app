@@ -44,6 +44,9 @@ export const StyledMenu = styled.button`
   outline: none;
   cursor: pointer;
   margin-right: ${({ theme }) => theme.sizes.sm};
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Title = styled.div`

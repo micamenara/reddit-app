@@ -18,6 +18,7 @@ import { Dispatch } from "redux";
 import { updatePosts, updateSelectedPost } from "store/actions";
 import { StyledMenu } from "components/Navbar";
 import PostCard from "components/PostCard";
+import useWindowSize from "hooks/useWindowSize";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -56,6 +57,7 @@ export default connect(
   const { setIsOpen, isOpen } = useContext(MenuContext);
   const ref = useRef() as React.MutableRefObject<HTMLInputElement>;
   const isMobile = useIsMobile();
+  const { height } = useWindowSize();
 
   const getItems = () => {
     const chunks = posts ? chunkArray(posts, ITEMS_PER_PAGE) : [];
@@ -84,7 +86,7 @@ export default connect(
   };
 
   return (
-    <SideNavContainer isMobile={isMobile} ref={ref}>
+    <SideNavContainer isMobile={isMobile} height={height} ref={ref}>
       <Header>
         <Trending>
           <FontAwesomeIcon icon={faChartLine} size="lg" /> TRENDING ON REDDIT
@@ -99,7 +101,7 @@ export default connect(
           </StyledMenu>
         )}
       </Header>
-      <NavContent isMobile={isMobile}>
+      <NavContent isMobile={isMobile} height={height}>
         {posts && posts.length > 0 ? (
           <div>
             {getItems().map((post: PostType, index) => (
@@ -130,24 +132,24 @@ export default connect(
   );
 });
 
-const SideNavContainer = styled.div<{ isMobile: boolean}>`
+const SideNavContainer = styled.div<{ isMobile: boolean, height: number}>`
   width: 300px;
   min-width: 300px;
   position: relative;
-  max-height: ${({ theme, isMobile }) =>
-    isMobile ? "100vh" : `calc(100vh - ${theme.sizes.homeTitle})`};
+  max-height: ${({ theme, isMobile, height }) =>
+    isMobile ? `${height}px` : `calc(${height}px - ${theme.sizes.homeTitle})`};
 `;
 
 const Trending = styled.h6`
   margin: 0px;
 `;
 
-const NavContent = styled.div<{ isMobile: boolean }>`
+const NavContent = styled.div<{ isMobile: boolean, height: number }>`
   overflow: auto;
-  height: ${({ theme, isMobile }) =>
+  height: ${({ theme, isMobile, height }) =>
     isMobile
-      ? `calc(100vh - ${theme.sizes.trending} - ${theme.sizes.sm} - ${theme.sizes.sm})`
-      : `calc(100vh - ${theme.sizes.homeTitle} - ${theme.sizes.trending} - ${theme.sizes.sm} - ${theme.sizes.sm})`};
+      ? `calc(${height}px - ${theme.sizes.trending} - ${theme.sizes.sm} - ${theme.sizes.sm})`
+      : `calc(${height}px - ${theme.sizes.homeTitle} - ${theme.sizes.trending} - ${theme.sizes.sm} - ${theme.sizes.sm})`};
   padding-bottom: 40px;
 `;
 
