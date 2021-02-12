@@ -1,54 +1,46 @@
-# Front-end Test
+# Getting Started with Create React App
 
-## Objective
-We would like to have you complete the following code test so we can evaluate your Front-end skills.  Please place your code in a public Github repository and commit each step of your process so we can review it.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-Your assignment is to create a simple Reddit client that shows the top 50 entries from Reddit - www.reddit.com/top
+## Available Scripts
 
-## Show your work
+In the project directory, you can run:
 
-1.  Create a Public repository
-2.  Commit each step of your process so we can follow your thought process.
+### `yarn start`
 
-## What to show
-To do this please follow these guidelines and use the front-end technology we talked about during your interview (Specific Javascript Framework).  If you are using ReactJS, you must incorporate Redux.
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The app should be able to show data from each entry such as:
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
 
-    - Title (at its full length, so take this into account when sizing your cells)
-    - Author
-    - entry date, following a format like “x hours ago” 
-    - A thumbnail for those who have a picture.
-    - Number of comments
-    - Unread status
+### `yarn test`
 
-In addition, for those having a picture (besides the thumbnail), please allow the user to tap on the thumbnail to be sent to the full sized picture.
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-## What to Include
+### `yarn build`
 
-    - Pagination support
-    - Saving pictures in the picture gallery
-    - App state-preservation/restoration
-    - Indicator of unread/read post (updated status, after post it’s selected)
-    - Dismiss Post Button (remove the cell from list. Animations required)
-    - Dismiss All Button (remove all posts. Animations required)
-    - Support split layout (left side: all posts / right side: detail post)
-    - Responsive design
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-## Resources
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-    - Reddit API - http://www.reddit.com/dev/api
-    - Example JSON file (top.json) is listed.
-    - Example Video of functionality is attached
-    
-## Deliverables we expect:
-* URL where the app can be viewed and seen working (use any platform of your preference: heroku.com, aws.amazon.com, etc)
-* Code in a public Github repo
-* README file with the decisions taken and important notes
-    
-## Time Spent
-You need to fully complete the challenge. We suggest not to spend more than 5 days total.  Please make commits as often as possible so we can see the time you spent and please do not make one commit.  We will evaluate the code and time spent.
- 
-What we want to see is how well you handle yourself given the time you spend on the problem, how you think, and how you prioritize when time is sufficient to solve everything.
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-Please email your solution as soon as you have completed the challenge or the time is up.
+### `yarn eject`
+
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
