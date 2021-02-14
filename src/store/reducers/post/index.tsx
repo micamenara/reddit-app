@@ -6,7 +6,9 @@ import {
 
 const postReducer = (
   state: AppState = {},
-  action: UpdatePostsActions | UpdateSelectedPostActions
+  action:
+    | UpdatePostsActions
+    | UpdateSelectedPostActions
 ) => {
   switch (action.type) {
     case "UPDATE_POSTS":
@@ -14,6 +16,7 @@ const postReducer = (
         ...state,
         posts: action.posts,
       };
+
     case "UPDATE_SELECTED_POST":
       return {
         ...state,

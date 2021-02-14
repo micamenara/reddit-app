@@ -29,7 +29,6 @@ const StyledButton = styled.button<ButtonType>`
   align-items: center;
   cursor: pointer;
   border: none;
-  transition: all 0.3s ease;
   padding: ${({ theme }) => `${theme.sizes.sm} ${theme.sizes.md}`};
   border-radius: ${({ theme }) => theme.sizes.sm};
   outline: 0px;

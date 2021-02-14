@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import getPosts from "services/getPosts";
-import { PostType } from "services/types/Posts";
+import { PostStatusType, PostType } from "services/types/Posts";
 import SideNav from "components/SideNav";
 import { connect } from "react-redux";
 import { updatePosts, updateSelectedPost } from "store/actions";
@@ -38,10 +38,19 @@ export default connect(
   useEffect(() => {
     getPosts().then((res) => {
       if (res) {
-        handleUpdatePosts(res.data.children);
-        handleUpdateSelecetdPost(res.data.children[0]);
+        const posts = res.data.children.map((child, idx) => {
+          return {
+            ...child,
+            data: {
+              ...child.data,
+              status: idx === 0 ? 'readed' : 'unreaded' as PostStatusType
+            }
+          }
+        });
+        handleUpdatePosts(posts);
+        handleUpdateSelecetdPost(posts[0]);
       }
-    });
+    })
   }, [handleUpdatePosts, handleUpdateSelecetdPost]);
 
   return (

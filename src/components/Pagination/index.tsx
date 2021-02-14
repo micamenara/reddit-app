@@ -4,21 +4,25 @@ import styled, { css } from "styled-components";
 declare type PaginationProps = {
   totalItems: number;
   amountPerPage: number;
+  activePage: number;
   onChange: (active: number) => void;
 };
 
 export default function Pagination({
   totalItems,
   amountPerPage,
+  activePage,
   onChange,
 }: PaginationProps) {
-  const [active, setActive] = useState(1);
-  const [pages, setPages] = useState<number[]>([]);
+  const [pages, setPages] = useState<{ label: number; key: number }[]>([]);
 
   useEffect(() => {
     const newPages = [];
     for (let i = 1; i <= Math.ceil(totalItems / amountPerPage); i++) {
-      newPages.push(i);
+      newPages.push({
+        label: i,
+        key: i - 1,
+      });
     }
     setPages(newPages);
   }, [totalItems, amountPerPage]);
@@ -26,16 +30,15 @@ export default function Pagination({
   return (
     <StyledPagination>
       {pages.map((page) => (
-        <li key={page}>
-          <Page
+        <li key={page.key}>
+          <PageButton
             onClick={() => {
-              setActive(page);
-              onChange(page - 1);
+              onChange(page.key);
             }}
-            isActive={active === page}
+            isActive={page.key === activePage}
           >
-            {page}
-          </Page>
+            {page.label}
+          </PageButton>
         </li>
       ))}
     </StyledPagination>
@@ -48,7 +51,7 @@ const StyledPagination = styled.ul`
   padding: 0px;
 `;
 
-const Page = styled.button<{ isActive: boolean }>`
+const PageButton = styled.button<{ isActive: boolean }>`
   cursor: pointer;
   background: transparent;
   border: none;
@@ -57,11 +60,14 @@ const Page = styled.button<{ isActive: boolean }>`
   height: ${({ theme }) => theme.sizes.lg};
   outline: none;
   margin-right: ${({ theme }) => theme.sizes.sm};
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   ${({ isActive, theme }) =>
     isActive &&
     css`
-    background-color: ${theme.colors.primary};
-    border-radius: 50%;
-  `}
+      background-color: ${theme.colors.primary};
+      border-radius: 50%;
+    `}
 `;

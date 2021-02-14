@@ -6,7 +6,7 @@ export type UpdatePostsActions = {
 };
 
 export type UpdateSelectedPostActions = {
-  selectedPost: string;
+  selectedPost: PostType;
   type: "UPDATE_SELECTED_POST";
 };
 

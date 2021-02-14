@@ -1,3 +1,5 @@
+export type PostStatusType = 'readed' | 'unreaded' | 'dismissed';
+
 export type PostType = {
   data: {
     approved_at_utc?: string;
@@ -18,9 +20,12 @@ export type PostType = {
     thumbnail_width: number;
     thumbnail_height: number;
     num_comments: number;
+    created: number;
     title: string;
     url: string;
+    id: string;
     permalink: string;
+    status: PostStatusType;
   };
   kind: string;
 };
